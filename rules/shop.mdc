@@ -1,0 +1,16 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
+- This is a Next js project 
+- Project uses pnpm for package manager
+- Make sure there are no typscript or linter errors
+- Follow the structure of the files in the app
+- Always consider best practices regarding my questions or orders and if my orders are again best practices, do not do it and inform me
+- THe project usese shadcn as a UI library
