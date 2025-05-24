@@ -17,36 +17,43 @@ import { useState } from "react";
 import { assessWriting } from "@/src/lib/server";
 import { createWorker } from "tesseract.js";
 import { fileToBase64 } from "@/src/lib/file-to-base64";
+import { getWordsCount } from "@/src/lib/count-words";
 
 const formSchema = z
   .object({
     question: z
       .string()
-      .min(1, "Question is required")
-      .max(1000, "Max number of character is 1000"),
-    response: z.string().min(1, "Response is required"),
+      .min(1, "سوال الزامی است")
+      .max(1000, "حداکثر تعداد کاراکتر ۱۰۰۰ است"),
+    response: z.string().min(1, "پاسخ الزامی است"),
     type: z.enum(["task_2", "task_1_general", "task_1_academic"]),
-    image: z.instanceof(File).optional(),
+    image: z
+      .instanceof(File)
+      .optional()
+      .refine((file) => !file || file.size <= 2 * 1024 * 1024, {
+        message: "حجم تصویر باید کمتر از ۲ مگابایت باشد",
+      }),
   })
   .superRefine((data, ctx) => {
     if (data.type === "task_1_academic" && !data.image) {
       ctx.addIssue({
         path: ["image"],
         code: z.ZodIssueCode.custom,
-        message: "Image is required for Academic Task 1",
+        message: "تصویر برای تسک ۱ آکادمیک الزامی است",
       });
     }
   })
   .superRefine((data, ctx) => {
-    const maxChars = data.type === "task_2" ? 500 : 300;
-    if (data.response.length > maxChars) {
+    const maxWords = data.type === "task_2" ? 500 : 300;
+    const wordCount = getWordsCount(data.response);
+    if (wordCount > maxWords) {
       ctx.addIssue({
         path: ["response"],
         code: z.ZodIssueCode.too_big,
-        message: `Response must be at most ${maxChars} characters for ${
-          data.type === "task_2" ? "Task 2" : "Task 1"
-        }`,
-        maximum: maxChars,
+        message: `پاسخ باید حداکثر ${maxWords} کلمه برای ${
+          data.type === "task_2" ? "تسک ۲" : "تسک ۱"
+        } باشد`,
+        maximum: maxWords,
         type: "string",
         inclusive: true,
       });
