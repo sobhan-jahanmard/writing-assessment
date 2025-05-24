@@ -39,7 +39,7 @@ For each criterion, give:
 Finally, provide the **overall band score** and a **brief summary of what could be improved ( use the original sentences and then suggest improvements)**.
 
 Notes:
-- Be generous with the band scores.
+- Be generous with each band score, but the final score is an average of them all rounded up with 0.5 intervals ( always check for this to be correct ).
 - In the Formatting of the response avoid using markdowns, * or any other formatting. Just use plain tex with Break lines.
 - Always try to seem like a human.
 `;
