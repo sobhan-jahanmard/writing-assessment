@@ -2,6 +2,10 @@ import { GoogleGenerativeAI, type Part } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_KEY || "");
 
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash",
+});
+
 export async function assessWritingGemini({
   prompt,
   image,
@@ -12,10 +16,6 @@ export async function assessWritingGemini({
   imageType?: File["type"];
 }) {
   try {
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
-    });
-
     const contents: Part[] = [{ text: prompt }];
 
     if (image && imageType) {

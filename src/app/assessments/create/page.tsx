@@ -17,7 +17,8 @@ import { useState } from "react";
 import { assessWriting } from "@/src/lib/server";
 import { createWorker } from "tesseract.js";
 import { fileToBase64 } from "@/src/lib/file-to-base64";
-import { getWordsCount } from "@/src/lib/count-words";
+import { getWordsCount } from "@/src/lib/get-count-words";
+import { Divider } from "@/src/components/ui/divider";
 
 const formSchema = z
   .object({
@@ -123,7 +124,8 @@ export default function CreateAssessment() {
   return (
     <div className="flex flex-col items-center w-full py-10">
       <span className="max-w-[800px] flex flex-col w-full">
-        <h1 className="text-2xl font-bold mb-6">درخواست تصحیح رایتینگ</h1>
+        <h1 className="text-2xl font-bold">درخواست ارزیابی رایتینگ</h1>
+        <Divider className="mt-4 mb-10" />
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" dir="rtl">
           <div className="space-y-2">
@@ -157,7 +159,7 @@ export default function CreateAssessment() {
             </label>
             <Textarea
               {...register("question")}
-              className="min-h-[100px]"
+              className="min-h-[150px]"
               dir="ltr"
             />
             {errors.question && (
@@ -198,7 +200,7 @@ export default function CreateAssessment() {
             <div className="space-y-2">
               <Textarea
                 {...register("response")}
-                className="min-h-[200px]"
+                className="min-h-[300px]"
                 dir="ltr"
               />
               <div className="flex items-center gap-2">
@@ -228,17 +230,19 @@ export default function CreateAssessment() {
             )}
           </div>
 
-          <span className="flex">
-            <span className="flex-1" />
-            <Button type="submit" disabled={isPending}>
+          <span className="flex justify-center">
+            <Button type="submit" disabled={isPending} className="px-7">
               {isPending ? "در حال بارگذاری..." : "فرستادن درخواست"}
             </Button>
           </span>
         </form>
         {assessment && (
-          <div className="mt-6" dir="ltr">
-            <h2 className="text-lg font-bold mb-2">نتیجه تصحیح</h2>
-            <pre className="bg-gray-100 text-black p-4 rounded-md whitespace-pre-wrap">
+          <div className="mt-6">
+            <h2 className="text-lg font-bold mb-2">نتیجه ارزیابی</h2>
+            <pre
+              dir="ltr"
+              className="bg-gray-100 text-black p-4 rounded-md whitespace-pre-wrap"
+            >
               {assessment}
             </pre>
           </div>

@@ -32,8 +32,22 @@ export async function assessWriting(body: Body) {
       imageType: body.imageType,
     });
 
-    const filePath = path.join(process.cwd(), "assessment.txt");
-    fs.writeFileSync(filePath, assessment);
+    const sentDataFilePath = path.join(process.cwd(), "sent-data.txt");
+    const assessmentFilePath = path.join(process.cwd(), "assessment.txt");
+    fs.writeFileSync(
+      sentDataFilePath,
+      JSON.stringify(
+        {
+          question: body.question,
+          response: body.response,
+          type: body.type,
+          hasImage: !!body.image,
+        },
+        null,
+        2
+      )
+    );
+    fs.writeFileSync(assessmentFilePath, assessment);
 
     return assessment;
   } catch (error: unknown) {
