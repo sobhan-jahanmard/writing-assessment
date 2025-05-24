@@ -80,11 +80,10 @@ export default function CreateAssessment() {
         question: data.question,
         response: data.response,
         type: data.type,
-        model: "gemini",
         image: data.image ? await fileToBase64(data.image) : undefined,
         imageType: data.image?.type,
       });
-      return res?.assessment;
+      return res;
     },
   });
 
