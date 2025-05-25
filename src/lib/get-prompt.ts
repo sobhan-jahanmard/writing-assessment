@@ -1,4 +1,4 @@
-import { Body } from "./server";
+import { Body } from "./assess-writing.server";
 
 export function getPrompt({
   question,

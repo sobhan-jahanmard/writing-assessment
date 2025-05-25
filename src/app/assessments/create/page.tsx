@@ -14,7 +14,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { assessWriting } from "@/src/lib/server";
+import { assessWriting } from "@/src/lib/assess-writing.server";
 import { createWorker } from "tesseract.js";
 import { fileToBase64 } from "@/src/lib/file-to-base64";
 import { getWordsCount } from "@/src/lib/get-count-words";

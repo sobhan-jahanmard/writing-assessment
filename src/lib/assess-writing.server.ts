@@ -4,6 +4,8 @@ import { getPrompt } from "./get-prompt";
 import { assessWritingGemini } from "./assess-writing-gemini";
 import path from "path";
 import fs from "fs";
+import { b64toBlob } from "./b64-to-blob";
+import { uploadFile } from "./supabase/storage.server";
 
 export type Body = {
   question: string;
@@ -18,6 +20,7 @@ export async function assessWriting(body: Body) {
     if (!body.question || !body.response || !body.type) {
       throw new Error("Question, response, type and model are required");
     }
+    await uploadFile(b64toBlob(body.image!), body.imageType!);
 
     const prompt = getPrompt({
       question: body.question,
