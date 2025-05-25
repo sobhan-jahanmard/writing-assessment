@@ -11,30 +11,30 @@ export type Database = {
     Tables: {
       assessments: {
         Row: {
+          assessing_time: string | null
           assessment_id: string
           assessor_id: string | null
           created_at: string | null
-          payment_id: string | null
           status: string | null
           text: string | null
           updated_at: string | null
           writing_id: string | null
         }
         Insert: {
+          assessing_time?: string | null
           assessment_id?: string
           assessor_id?: string | null
           created_at?: string | null
-          payment_id?: string | null
           status?: string | null
           text?: string | null
           updated_at?: string | null
           writing_id?: string | null
         }
         Update: {
+          assessing_time?: string | null
           assessment_id?: string
           assessor_id?: string | null
           created_at?: string | null
-          payment_id?: string | null
           status?: string | null
           text?: string | null
           updated_at?: string | null
@@ -47,13 +47,6 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "assessors"
             referencedColumns: ["assessor_id"]
-          },
-          {
-            foreignKeyName: "fk_payment_id"
-            columns: ["payment_id"]
-            isOneToOne: false
-            referencedRelation: "payments"
-            referencedColumns: ["payment_id"]
           },
           {
             foreignKeyName: "fk_writing_id"
@@ -108,7 +101,7 @@ export type Database = {
           {
             foreignKeyName: "fk_assessment_id"
             columns: ["assessment_id"]
-            isOneToOne: true
+            isOneToOne: false
             referencedRelation: "assessments"
             referencedColumns: ["assessment_id"]
           },
