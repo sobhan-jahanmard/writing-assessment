@@ -2,7 +2,7 @@
 
 import { Database } from "@/database.types";
 import { createClient } from "./server";
-import { SaveWritingDTO } from "./dtos";
+import { SaveWritingDTO } from "./types";
 
 export async function getWritingsOfUser(userId: string) {
   const supabase = await createClient();
@@ -43,13 +43,17 @@ export async function saveWriting(writingDTO: SaveWritingDTO) {
   };
 
   const supabase = await createClient();
-  const { data, error } = await supabase.from("writings").insert(writing);
+  const { data, error } = await supabase
+    .from("writings")
+    .insert(writing)
+    .select()
+    .single();
 
   if (error) {
     if (error.code === "PGRST116") {
       throw new Error("Writing not found");
     }
-    throw new Error("Error fetching writing");
+    throw new Error("Error saving writing");
   }
 
   return data;

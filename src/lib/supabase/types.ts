@@ -7,9 +7,7 @@ export type SaveWritingDTO = Omit<
 
 export type SaveAssessmentDTO = Omit<
   Database["public"]["Tables"]["assessments"]["Insert"],
-  | "assessment_id"
-  | "created_at"
-  | "updated_at"
-  | "assessing_time"
-  | "assessor_id"
+  "created_at" | "updated_at" | "assessing_time" | "assessor_id"
 >;
+
+export type AssessmentStatus = null | "pending" | "completed" | "failed";

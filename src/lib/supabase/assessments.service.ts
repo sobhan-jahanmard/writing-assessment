@@ -2,9 +2,9 @@
 
 import { Database } from "@/database.types";
 import { createClient } from "./server";
-import { SaveAssessmentDTO } from "./dtos";
+import { SaveAssessmentDTO } from "./types";
 import { generateRandomAssessingTime } from "../generate-random-assessing-time";
-import { getAssessorFromModelName } from "./assessor.server";
+import { getAssessorFromModelName } from "./assessor.service";
 
 export async function getAssessmentsOfWriting(writingId: string) {
   const supabase = await createClient();
@@ -35,7 +35,11 @@ export async function saveAssessment(
     assessor_id: assessor.assessor_id,
   };
 
-  const { data, error } = await supabase.from("assessments").upsert(assessment);
+  const { data, error } = await supabase
+    .from("assessments")
+    .upsert(assessment)
+    .select()
+    .single();
 
   if (!!error) {
     throw new Error("Error saving assessment");

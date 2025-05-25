@@ -5,7 +5,9 @@ import { assessWritingGemini } from "./assess-writing-gemini";
 import path from "path";
 import fs from "fs";
 import { b64toBlob } from "./b64-to-blob";
-import { uploadFile } from "./supabase/storage.server";
+import { uploadFile } from "./supabase/storage.service";
+import { saveWriting } from "./supabase/writings.service";
+import { saveAssessment } from "./supabase/assessments.service";
 
 export type Body = {
   question: string;
@@ -20,7 +22,27 @@ export async function assessWriting(body: Body) {
     if (!body.question || !body.response || !body.type) {
       throw new Error("Question, response, type and model are required");
     }
-    await uploadFile(b64toBlob(body.image!), body.imageType!);
+
+    let uploadedFile: string | null = null;
+    if (body.image) {
+      uploadedFile = await uploadFile(b64toBlob(body.image!), body.imageType!);
+    }
+
+    const savedWriting = await saveWriting({
+      question: body.question,
+      response: body.response,
+      type: body.type,
+      question_image: uploadedFile,
+    });
+
+    const initializedAsessment = await saveAssessment(
+      {
+        status: "pending",
+        writing_id: savedWriting?.writing_id,
+        text: null,
+      },
+      process.env.NEXT_PUBLIC_MODEL_NAME!
+    );
 
     const prompt = getPrompt({
       question: body.question,
@@ -34,6 +56,18 @@ export async function assessWriting(body: Body) {
       image: body.image,
       imageType: body.imageType,
     });
+
+    const savedAssessment = await saveAssessment(
+      {
+        status: "completed",
+        writing_id: savedWriting?.writing_id,
+        text: assessment,
+        assessment_id: initializedAsessment?.assessment_id,
+      },
+      process.env.NEXT_PUBLIC_MODEL_NAME!
+    );
+
+    console.log("assessment_id", savedAssessment?.assessment_id);
 
     const sentDataFilePath = path.join(process.cwd(), "sent-data.txt");
     const assessmentFilePath = path.join(process.cwd(), "assessment.txt");
