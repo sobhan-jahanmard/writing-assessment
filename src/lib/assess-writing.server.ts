@@ -8,6 +8,7 @@ import { b64toBlob } from "./b64-to-blob";
 import { uploadFile } from "./supabase/storage.service";
 import { saveWriting } from "./supabase/writings.service";
 import { saveAssessment } from "./supabase/assessments.service";
+import { ensureUserExists, getUserOnServer } from "./supabase/user.service";
 
 export type Body = {
   question: string;
@@ -23,6 +24,10 @@ export async function assessWriting(body: Body) {
       throw new Error("Question, response, type and model are required");
     }
 
+    const requestUser = await getUserOnServer(true);
+
+    const user = await ensureUserExists(requestUser?.id);
+
     let uploadedFile: string | null = null;
     if (body.image) {
       uploadedFile = await uploadFile(b64toBlob(body.image!), body.imageType!);
@@ -33,6 +38,7 @@ export async function assessWriting(body: Body) {
       response: body.response,
       type: body.type,
       question_image: uploadedFile,
+      user_id: user.user_id,
     });
 
     const initializedAsessment = await saveAssessment(

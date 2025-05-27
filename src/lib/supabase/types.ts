@@ -2,7 +2,7 @@ import { Database } from "@/database.types";
 
 export type SaveWritingDTO = Omit<
   Database["public"]["Tables"]["writings"]["Insert"],
-  "writing_id" | "user_id" | "created_at" | "updated_at"
+  "writing_id" | "created_at" | "updated_at"
 >;
 
 export type SaveAssessmentDTO = Omit<

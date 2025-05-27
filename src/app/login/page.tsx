@@ -1,4 +1,4 @@
-import { login, signup } from "@/src/lib/supabase/actios";
+import { login, signup } from "@/src/lib/supabase/auth.service";
 
 export default async function Page() {
   return (
