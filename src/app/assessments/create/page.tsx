@@ -124,10 +124,14 @@ export default function CreateAssessment() {
   return (
     <div className="flex flex-col items-center w-full py-10">
       <span className="max-w-[800px] flex flex-col w-full">
-        <h1 className="text-2xl font-extrabold">تصحیح رایتینگ</h1>
+        <h1 className="text-2xl font-extrabold px-3">تصحیح رایتینگ</h1>
         <Divider className="mt-4 mb-10" />
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" dir="rtl">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-6 px-3"
+          dir="rtl"
+        >
           <div className="space-y-2">
             <label htmlFor="type" className="text-sm font-medium">
               نوع رایتینگ
