@@ -92,7 +92,7 @@ export async function assessWriting(body: Body) {
     );
     fs.writeFileSync(assessmentFilePath, assessment);
 
-    return assessment;
+    return savedAssessment;
   } catch (error: unknown) {
     console.error("Error processing request:", error);
     throw new Error("Invalid request body");

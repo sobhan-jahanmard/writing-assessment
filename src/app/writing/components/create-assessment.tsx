@@ -19,6 +19,9 @@ import { createWorker } from "tesseract.js";
 import { fileToBase64 } from "@/src/lib/file-to-base64";
 import { getWordsCount } from "@/src/lib/get-count-words";
 import { Divider } from "@/src/components/ui/divider";
+import { AssessmentView } from "./assessment-view";
+import { Assessment } from "@/src/lib/supabase/types";
+import { getWritingTypeLabels } from "@/src/lib/get-writing-type-labels";
 
 const formSchema = z
   .object({
@@ -62,8 +65,8 @@ const formSchema = z
   });
 type FormData = z.infer<typeof formSchema>;
 
-export default function CreateAssessment() {
-  const [assessment, setAssessment] = useState<string | null>(null);
+export function CreateAssessmentComponent() {
+  const [assessment, setAssessment] = useState<Assessment | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const {
@@ -124,14 +127,10 @@ export default function CreateAssessment() {
   return (
     <div className="flex flex-col items-center w-full py-10">
       <span className="max-w-[800px] flex flex-col w-full">
-        <h1 className="text-2xl font-extrabold px-3">تصحیح رایتینگ</h1>
+        <h1 className="text-2xl font-extrabold">بارگذاری رایتینگ</h1>
         <Divider className="mt-4 mb-10" />
 
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-6 px-3"
-          dir="rtl"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" dir="rtl">
           <div className="space-y-2">
             <label htmlFor="type" className="text-sm font-medium">
               نوع رایتینگ
@@ -146,12 +145,14 @@ export default function CreateAssessment() {
                 <SelectValue placeholder="Select task type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="task_2">Task 2 </SelectItem>
+                <SelectItem value="task_2">
+                  {getWritingTypeLabels("task_2")}{" "}
+                </SelectItem>
                 <SelectItem value="task_1_general">
-                  Task 1 (General Training)
+                  {getWritingTypeLabels("task_1_general")}
                 </SelectItem>
                 <SelectItem value="task_1_academic">
-                  Task 1 (Academic)
+                  {getWritingTypeLabels("task_1_academic")}
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -241,15 +242,9 @@ export default function CreateAssessment() {
           </span>
         </form>
         {assessment && (
-          <div className="mt-6">
-            <h2 className="text-lg font-bold mb-2">نتیجه ارزیابی</h2>
-            <pre
-              dir="ltr"
-              className="bg-gray-100 text-black p-4 rounded-md whitespace-pre-wrap"
-            >
-              {assessment}
-            </pre>
-          </div>
+          <span>
+            <AssessmentView assessment={assessment} />
+          </span>
         )}
       </span>
     </div>
