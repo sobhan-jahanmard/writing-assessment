@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        default: ["Vazir", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["var(--font-vazir)"],
       },
       colors: {
         background: "var(--background)",
