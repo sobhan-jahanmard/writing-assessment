@@ -31,7 +31,7 @@ const Navbar = () => {
               قیمت‌ها
             </Link>
             <Link
-              href="/submit"
+              href="/auth"
               className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90"
             >
               ورود / ثبت نام
