@@ -8,20 +8,23 @@ export const Footer = () => {
           <Link href="/" className="text-2xl font-bold text-primary-foreground">
             آیلتس پرو
           </Link>
-          <div
-            className="flex flex-col items-start text-sm text-primary-foreground"
-            dir="ltr"
-          >
-            <a href="tel:+989123456789" className="hover:underline">
-              +98 936 934 8660
-            </a>
-            <a
-              href="mailto:contact@writing-assessment.com"
-              className="hover:underline"
+          <span className="flex gap-3 items-center">
+            <span>تماس با پشتیبانی:</span>
+            <div
+              className="flex flex-col items-start text-sm text-primary-foreground"
+              dir="ltr"
             >
-              s.jahanmad@gmail.com
-            </a>
-          </div>
+              <a href="tel:+989123456789" className="hover:underline">
+                +98 936 934 8660
+              </a>
+              <a
+                href="mailto:contact@writing-assessment.com"
+                className="hover:underline"
+              >
+                s.jahanmad@gmail.com
+              </a>
+            </div>
+          </span>
         </div>
       </div>
     </footer>
