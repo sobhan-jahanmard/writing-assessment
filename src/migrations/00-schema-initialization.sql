@@ -126,12 +126,29 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION create_user_record()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO "users" ("user_id")
-  VALUES (NEW.id)
-  ON CONFLICT ("user_id") DO NOTHING;
+  BEGIN
+    INSERT INTO "users" ("user_id")
+    VALUES (NEW.id)
+    ON CONFLICT ("user_id") DO NOTHING;
+  EXCEPTION WHEN OTHERS THEN
+    RAISE NOTICE 'Error inserting into users: %', SQLERRM;
+    RETURN NEW;
+  END;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+
+
+-- Step 1: Drop the old FK constraint
+ALTER TABLE "users" DROP CONSTRAINT users_user_id_fkey;
+
+-- Step 2: Re-add it as deferrable
+ALTER TABLE "users"
+ADD CONSTRAINT users_user_id_fkey
+FOREIGN KEY ("user_id")
+REFERENCES auth.users(id)
+DEFERRABLE INITIALLY DEFERRED;
 
 -- Create triggers for all tables with updated_at
 DO $$

@@ -5,6 +5,8 @@ export function isPublicPage(pathname: string) {
     return true;
   } else if (pathname.startsWith("/auth")) {
     return true;
+  } else if (pathname.startsWith("/error")) {
+    return true;
   } else {
     return false;
   }
