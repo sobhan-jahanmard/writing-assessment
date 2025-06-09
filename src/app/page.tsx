@@ -1,12 +1,9 @@
-import Navbar from "../components/Navbar";
 import Link from "next/link";
 import { Footer } from "../components/Footer";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <Navbar />
-
       {/* Hero Section */}
       <section className="pt-24 pb-16 bg-gradient-to-b from-background/50 to-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -1,5 +1,6 @@
 import { login } from "@/src/lib/supabase/auth.service";
 import { Button } from "@/src/components/ui/button";
+import { FormEvent } from "react";
 
 const translations = {
   title: "ورود",
@@ -14,6 +15,12 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onToggle }: LoginFormProps) {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    await login(formData);
+  };
+
   return (
     <div className="w-full max-w-md p-8 space-y-8 bg-card rounded-lg shadow-lg">
       <div className="text-center">
@@ -22,7 +29,7 @@ export function LoginForm({ onToggle }: LoginFormProps) {
         </h2>
       </div>
 
-      <form className="mt-8 space-y-6" dir="rtl">
+      <form onSubmit={handleSubmit} className="mt-8 space-y-6" dir="rtl">
         <div className="space-y-4">
           <div>
             <label

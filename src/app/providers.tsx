@@ -1,7 +1,8 @@
 "use client";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { getQueryClient } from "../lib/supabase/query-client";
 
-const queryClient = new QueryClient();
+const queryClient = getQueryClient();
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
