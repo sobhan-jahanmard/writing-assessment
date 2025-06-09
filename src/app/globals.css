@@ -97,3 +97,11 @@ html[dir="ltr"],
 [dir="ltr"] {
   font-family: sans-serif;
 }
+
+.font-vazir {
+  font-family: "Vazir", sans-serif;
+}
+
+.font-sans-serif {
+  font-family: sans-serif;
+}

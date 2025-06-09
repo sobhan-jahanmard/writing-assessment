@@ -14,8 +14,14 @@ export type SaveAssessmentDTO = Omit<
 
 export type AssessmentStatus = null | "pending" | "completed" | "failed";
 
-export type Writing = Awaited<ReturnType<typeof getSingleWriting>> | undefined;
+export type Writing =
+  | (Awaited<ReturnType<typeof getSingleWriting>> & { created_at: string })
+  | undefined;
 
 export type Assessment =
   | Awaited<ReturnType<typeof getAssessmentsOfWriting>>[number]
   | undefined;
+
+export type WritingWithLatestAssessment = Writing & {
+  latest_assessment: Assessment | null;
+};
