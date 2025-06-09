@@ -20,7 +20,7 @@ export async function login(formData: FormData) {
     redirect("/error");
   }
 
-  redirect("/dashboard");
+  redirect("/dashboard?invalidate=true");
 }
 
 export async function signup(formData: FormData) {
@@ -48,5 +48,5 @@ export async function logout() {
   const supabase = await createClient();
   await supabase.auth.signOut();
 
-  redirect("/");
+  redirect("/?invalidate=true");
 }
