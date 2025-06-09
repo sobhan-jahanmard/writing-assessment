@@ -43,8 +43,9 @@ export const WritingItem = ({
         >
           {formatDate(writingWithLatestAssessment?.created_at)}
         </td>
-        <td className="px-6 py-4">
-          {writingWithLatestAssessment?.latest_assessment?.status || "-"}
+        <td className="px-6 py-4 font-bold">
+          {writingWithLatestAssessment?.latest_assessment?.status?.toUpperCase() ||
+            "-"}
         </td>
       </tr>
     </Link>

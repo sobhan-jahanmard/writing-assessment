@@ -11,13 +11,13 @@ import { WritingWithLatestAssessment } from "@/src/lib/supabase/types";
 interface PaginatedWritingsProps {
   userId: string;
 }
+const pageSize = 10;
 
 export function PaginatedWritings({ userId }: PaginatedWritingsProps) {
   const [page, setPage] = useState(1);
-  const pageSize = 5;
 
   const { data, isLoading } = useQuery({
-    queryKey: ["writings", userId, page],
+    queryKey: ["getWritingsWithLatestAssessment", userId, page],
     queryFn: () => getWritingsWithLatestAssessment(userId, page, pageSize),
   });
 

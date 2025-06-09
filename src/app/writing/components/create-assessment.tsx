@@ -19,9 +19,8 @@ import { createWorker } from "tesseract.js";
 import { fileToBase64 } from "@/src/lib/file-to-base64";
 import { getWordsCount } from "@/src/lib/get-count-words";
 import { Divider } from "@/src/components/ui/divider";
-import { AssessmentView } from "./assessment-view";
-import { Assessment } from "@/src/lib/supabase/types";
 import { getWritingTypeLabels } from "@/src/lib/get-writing-type-labels";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -66,8 +65,8 @@ const formSchema = z
 type FormData = z.infer<typeof formSchema>;
 
 export function CreateAssessmentComponent() {
-  const [assessment, setAssessment] = useState<Assessment | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -100,7 +99,7 @@ export function CreateAssessmentComponent() {
 
   const onSubmit = async (data: FormData) => {
     const assessment = await mutateAsync(data);
-    setAssessment(assessment);
+    router.push(`/writing/${assessment.writing_id}`);
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -241,11 +240,6 @@ export function CreateAssessmentComponent() {
             </Button>
           </span>
         </form>
-        {assessment && (
-          <span>
-            <AssessmentView assessment={assessment} />
-          </span>
-        )}
       </span>
     </div>
   );
