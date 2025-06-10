@@ -3,6 +3,7 @@ import { Vazirmatn } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import Navbar from "../components/Navbar";
+import { Suspense } from "react";
 
 const vazir = Vazirmatn({
   subsets: ["arabic"],
@@ -23,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <Providers>
-        <Navbar />
+        <Suspense fallback={<></>}>
+          <Navbar />
+        </Suspense>
         <body className={`${vazir.variable} font-sans antialiased`}>
           {children}
         </body>
