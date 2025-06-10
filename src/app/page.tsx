@@ -10,13 +10,11 @@ export default function Home() {
           <div className="text-center">
             <h1 className="text-4xl tracking-tight font-extrabold text-foreground sm:text-5xl md:text-6xl mt-10">
               <span className="block mb-6">ارزیابی رایتینگ آیلتس</span>
-              <span className="block text-primary text-4xl">
-                در کمتر از ۱۲ ساعت
-              </span>
             </h1>
             <p className="mt-3 max-w-md mx-auto text-base text-muted-foreground sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-              ارزیابی حرفه‌ای رایتینگ آیلتس با بازخورد دقیق و پیش‌بینی نمره.
-              سریع، دقیق و مقرون به صرفه.
+              در کمتر از{" "}
+              <span className="text-bolder text-primary">۱۲ ساعت</span> - با
+              پایین ترین قیمت و بالاترین کیفیت
             </p>
             <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
               <div className="rounded-md shadow">
@@ -82,7 +80,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="mt-4 text-lg font-medium text-foreground">
-                بپون نیاز به تایپ
+                بدون نیاز به تایپ
               </h3>
               <p className="mt-2 text-base text-muted-foreground">
                 تبدیل متن دستنویس شما به تایپ شده{" "}
@@ -164,6 +162,58 @@ export default function Home() {
                     دریافت بازخورد دقیق و پیش‌بینی نمره در کمتر از ۱۲ ساعت
                   </p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-16 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-extrabold text-foreground sm:text-4xl">
+              تعرفه‌ها
+            </h2>
+          </div>
+          <div className="mt-12 grid gap-8 grid-cols-1 md:grid-cols-3">
+            <div className="relative p-6 bg-card rounded-lg shadow-sm border border-border">
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-foreground">
+                  تسک ۱ آکادمیک
+                </h3>
+                <p className="mt-4 text-3xl font-bold text-primary">
+                  ۱۵۰,۰۰۰ تومان
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  برای نمودارها و گراف‌ها
+                </p>
+              </div>
+            </div>
+            <div className="relative p-6 bg-card rounded-lg shadow-sm border border-border">
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-foreground">
+                  تسک 1 جنرال
+                </h3>
+                <p className="mt-4 text-3xl font-bold text-primary">
+                  ۱۵۰,۰۰۰ تومان
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  برای نامه‌ها و مقالات
+                </p>
+              </div>
+            </div>
+            <div className="relative p-6 bg-card rounded-lg shadow-sm border border-border">
+              <div className="text-center">
+                <h3 className="text-xl font-bold text-foreground">
+                  تسک ۲ آکادمیک
+                </h3>
+                <p className="mt-4 text-3xl font-bold text-primary">
+                  ۲۰۰,۰۰۰ تومان
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  برای مقالات تحلیلی
+                </p>
               </div>
             </div>
           </div>
