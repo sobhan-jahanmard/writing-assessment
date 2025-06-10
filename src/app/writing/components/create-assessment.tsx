@@ -90,8 +90,10 @@ export function CreateAssessmentComponent() {
         question: data.question,
         response: data.response,
         type: data.type,
-        image: data.image ? await fileToBase64(data.image) : undefined,
-        imageType: data.image?.type,
+        ...(!!data.image && {
+          image: await fileToBase64(data.image),
+          imageType: data.image?.type,
+        }),
       });
       return res;
     },
