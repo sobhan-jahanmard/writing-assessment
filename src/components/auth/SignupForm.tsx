@@ -1,5 +1,16 @@
 import { signup } from "@/src/lib/supabase/auth.service";
 import { Button } from "@/src/components/ui/button";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const signupSchema = z.object({
+  email: z.string().email("ایمیل نامعتبر است"),
+  password: z.string().min(6, "رمز عبور باید حداقل ۶ کاراکتر باشد"),
+});
+
+type SignupFormData = z.infer<typeof signupSchema>;
 
 const translations = {
   title: "ثبت نام",
@@ -14,6 +25,27 @@ interface SignupFormProps {
 }
 
 export function SignupForm({ onToggle }: SignupFormProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupFormData>({
+    resolver: zodResolver(signupSchema),
+  });
+
+  const { mutate: signupMutation, isPending } = useMutation({
+    mutationFn: async (data: SignupFormData) => {
+      const formData = new FormData();
+      formData.append("email", data.email);
+      formData.append("password", data.password);
+      return signup(formData);
+    },
+  });
+
+  const onSubmit = (data: SignupFormData) => {
+    signupMutation(data);
+  };
+
   return (
     <div className="w-full max-w-md p-8 space-y-8 bg-card rounded-lg shadow-lg">
       <div className="text-center">
@@ -22,7 +54,11 @@ export function SignupForm({ onToggle }: SignupFormProps) {
         </h2>
       </div>
 
-      <form className="mt-8 space-y-6" dir="rtl">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mt-8 space-y-6"
+        dir="rtl"
+      >
         <div className="space-y-4">
           <div>
             <label
@@ -33,11 +69,15 @@ export function SignupForm({ onToggle }: SignupFormProps) {
             </label>
             <input
               id="email"
-              name="email"
               type="email"
-              required
+              {...register("email")}
               className="mt-1 block w-full px-3 py-2 bg-background border border-input rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
             />
+            {errors.email && (
+              <p className="mt-1 text-sm text-destructive">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div>
             <label
@@ -48,17 +88,21 @@ export function SignupForm({ onToggle }: SignupFormProps) {
             </label>
             <input
               id="password"
-              name="password"
               type="password"
-              required
+              {...register("password")}
               className="mt-1 block w-full px-3 py-2 bg-background border border-input rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
             />
+            {errors.password && (
+              <p className="mt-1 text-sm text-destructive">
+                {errors.password.message}
+              </p>
+            )}
           </div>
         </div>
 
         <div className="flex flex-col space-y-4">
-          <Button type="submit" formAction={signup} className="w-full">
-            {translations.submit}
+          <Button type="submit" disabled={isPending} className="w-full">
+            {isPending ? "در حال ثبت نام..." : translations.submit}
           </Button>
 
           <button
