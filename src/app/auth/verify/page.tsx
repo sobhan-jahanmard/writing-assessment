@@ -2,6 +2,12 @@
 
 import { Mail } from "lucide-react";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "تایید ایمیل | ارزیابی رایتینگ آیلتس",
+  description: "لطفاً ایمیل خود را برای تکمیل فرآیند ثبت نام بررسی کنید",
+};
 
 export default function VerifyEmailPage() {
   return (

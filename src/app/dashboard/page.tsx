@@ -3,6 +3,12 @@ import { PaginatedWritings } from "./components/paginated-writings";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/src/components/ui/button";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "داشبورد | ارزیابی رایتینگ آیلتس",
+  description: "مدیریت رایتینگ‌های آیلتس و مشاهده نتایج ارزیابی",
+};
 
 export default async function Page() {
   const supabase = await createClient();

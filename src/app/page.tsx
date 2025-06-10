@@ -1,5 +1,12 @@
 import Link from "next/link";
 import { Footer } from "../components/Footer";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ارزیابی رایتینگ آیلتس | صفحه اصلی",
+  description:
+    "ارزیابی رایتینگ آیلتس با تحویل در کمتر از ۱۲ ساعت، با پایین ترین قیمت و بالاترین کیفیت",
+};
 
 export default function Home() {
   return (

@@ -1,6 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "خطا | ارزیابی رایتینگ آیلتس",
+  description:
+    "متأسفانه مشکلی پیش آمده است. لطفاً دوباره تلاش کنید یا به صفحه اصلی بازگردید.",
+};
 
 export default function ErrorPage() {
   return (
