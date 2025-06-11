@@ -100,8 +100,8 @@ export function CreateAssessmentComponent() {
   });
 
   const onSubmit = async (data: FormData) => {
-    const assessment = await mutateAsync(data);
-    router.push(`/writing/${assessment.writing_id}`);
+    await mutateAsync(data);
+    router.push(`/dashboard`);
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
