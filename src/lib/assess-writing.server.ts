@@ -2,8 +2,6 @@
 
 import { getPrompt } from "./get-prompt";
 import { assessWritingGemini } from "./assess-writing-gemini";
-import path from "path";
-import fs from "fs";
 import { b64toBlob } from "./b64-to-blob";
 import { uploadFile } from "./supabase/storage.service";
 import { saveWriting } from "./supabase/writings.service";
@@ -57,42 +55,28 @@ export async function assessWriting(body: Body) {
       hasImage: !!body.image,
     });
 
-    const assessment = await assessWritingGemini({
+    assessWritingGemini({
       prompt,
       image: body.image,
       imageType: body.imageType,
-    });
+    })
+      .then(async (assessment) => {
+        await saveAssessment(
+          {
+            status: "completed",
+            writing_id: savedWriting?.writing_id,
+            text: assessment,
+            assessment_id: initializedAsessment?.assessment_id,
+          },
+          process.env.NEXT_PUBLIC_MODEL_NAME!
+        );
+      })
+      .catch((err) => {
+        console.log("err assessing");
+        console.log(err);
+      });
 
-    const savedAssessment = await saveAssessment(
-      {
-        status: "completed",
-        writing_id: savedWriting?.writing_id,
-        text: assessment,
-        assessment_id: initializedAsessment?.assessment_id,
-      },
-      process.env.NEXT_PUBLIC_MODEL_NAME!
-    );
-
-    console.log("assessment_id", savedAssessment?.assessment_id);
-
-    const sentDataFilePath = path.join(process.cwd(), "sent-data.txt");
-    const assessmentFilePath = path.join(process.cwd(), "assessment.txt");
-    fs.writeFileSync(
-      sentDataFilePath,
-      JSON.stringify(
-        {
-          question: body.question,
-          response: body.response,
-          type: body.type,
-          hasImage: !!body.image,
-        },
-        null,
-        2
-      )
-    );
-    fs.writeFileSync(assessmentFilePath, assessment);
-
-    return savedAssessment;
+    return;
   } catch (error: unknown) {
     console.error("Error processing request:", error);
     throw new Error("Invalid request body");
