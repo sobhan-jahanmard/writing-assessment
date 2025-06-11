@@ -5,22 +5,6 @@ import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { WritingWritingViewWithAssessments } from "../components/writing-view-with-assessments";
 import { Writing } from "@/src/lib/supabase/types";
-import { Metadata } from "next";
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { id: string };
-}): Promise<Metadata> {
-  const writing = await getSingleWriting(params.id);
-
-  return {
-    title: `رایتینگ ${writing?.question || params.id} | ارزیابی رایتینگ آیلتس`,
-    description: `مشاهده و ارزیابی رایتینگ آیلتس ${
-      writing?.question || params.id
-    }`,
-  };
-}
 
 export default function Page() {
   const { id } = useParams<{ id: string }>();

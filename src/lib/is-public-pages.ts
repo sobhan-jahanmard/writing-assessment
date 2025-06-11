@@ -3,7 +3,9 @@ export function isPublicPage(pathname: string) {
     return true;
   } else if (pathname.startsWith("/login")) {
     return true;
-  } else if (pathname.startsWith("/auth")) {
+  } else if (pathname.startsWith("/auth/login")) {
+    return true;
+  } else if (pathname.startsWith("/auth/signup")) {
     return true;
   } else if (pathname.startsWith("/error")) {
     return true;

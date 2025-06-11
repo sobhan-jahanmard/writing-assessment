@@ -1,9 +1,11 @@
+"use client";
 import { login } from "@/src/lib/supabase/auth.service";
 import { Button } from "@/src/components/ui/button";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 
 const loginSchema = z.object({
   email: z.string().email("ایمیل نامعتبر است"),
@@ -20,11 +22,7 @@ const translations = {
   toggle: "حساب کاربری ندارید؟ ثبت نام کنید",
 };
 
-interface LoginFormProps {
-  onToggle: () => void;
-}
-
-export function LoginForm({ onToggle }: LoginFormProps) {
+export function LoginForm() {
   const {
     register,
     handleSubmit,
@@ -104,14 +102,12 @@ export function LoginForm({ onToggle }: LoginFormProps) {
           <Button type="submit" disabled={isPending} className="w-full">
             {isPending ? "در حال ورود..." : translations.submit}
           </Button>
-
-          <button
-            type="button"
-            onClick={onToggle}
+          <Link
+            href="/auth/login"
             className="text-sm text-primary hover:text-primary/80 transition-colors"
           >
             {translations.toggle}
-          </button>
+          </Link>
         </div>
       </form>
     </div>

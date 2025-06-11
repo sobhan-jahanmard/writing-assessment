@@ -1,5 +1,3 @@
-"use client";
-
 import { CreateAssessmentComponent } from "../components/create-assessment";
 import { Metadata } from "next";
 
