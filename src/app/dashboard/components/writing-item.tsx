@@ -9,7 +9,11 @@ export const WritingItem = ({
 }) => {
   const formatDate = (dateString: string | null | undefined) => {
     if (!dateString) return "-";
-    const date = new Date(dateString);
+    const utcDate = new Date(dateString);
+    const localDate = new Date(
+      utcDate.getTime() + new Date().getTimezoneOffset() * 60000
+    );
+
     return new Intl.DateTimeFormat("fa-IR", {
       year: "numeric",
       month: "2-digit",
@@ -17,7 +21,7 @@ export const WritingItem = ({
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
-    }).format(date);
+    }).format(localDate);
   };
 
   const href = `/writing/${writingWithLatestAssessment?.writing_id}`;
