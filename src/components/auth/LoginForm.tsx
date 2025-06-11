@@ -19,7 +19,7 @@ const translations = {
   email: "ایمیل",
   password: "رمز عبور",
   submit: "ورود",
-  toggle: "حساب کاربری ندارید؟ ثبت نام کنید",
+  toggle: `حساب کاربری ندارید؟  ثبت نام کنید`,
 };
 
 export function LoginForm() {
@@ -103,7 +103,7 @@ export function LoginForm() {
             {isPending ? "در حال ورود..." : translations.submit}
           </Button>
           <Link
-            href="/auth/login"
+            href="/auth/signup"
             className="text-sm text-primary hover:text-primary/80 transition-colors"
           >
             {translations.toggle}

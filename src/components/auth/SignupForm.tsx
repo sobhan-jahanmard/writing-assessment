@@ -19,7 +19,7 @@ const translations = {
   email: "ایمیل",
   password: "رمز عبور",
   submit: "ثبت نام",
-  toggle: "قبلاً ثبت نام کرده‌اید؟ وارد شوید",
+  toggle: `قبلاً ثبت نام کرده‌اید؟  وارد شوید`,
 };
 
 export function SignupForm() {
