@@ -20,8 +20,8 @@ export default async function Page() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <span className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold mb-8">داشبورد</h1>
+      <span className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold ">داشبورد</h1>
         <Link href={"/writing/create"}>
           <Button className="flex gap-2">
             ایجاد رایتینگ جدید <Plus height={20} width={20} />

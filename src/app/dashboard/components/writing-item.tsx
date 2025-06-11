@@ -34,11 +34,13 @@ export const WritingItem = ({
           {getWritingTypeLabels(writingWithLatestAssessment?.type || "")}
         </td>
         <td
-          className="px-6 py-4 max-w-md whitespace-pre-wrap font-sans-serif text-left"
+          className="px-6 py-4 max-w-md font-sans-serif text-left"
           dir="ltr"
           style={{ direction: "ltr" }}
         >
-          {writingWithLatestAssessment?.question}
+          <div className="truncate whitespace-nowrap overflow-hidden">
+            {writingWithLatestAssessment?.question}
+          </div>
         </td>
         <td
           className="px-6 py-4 font-sans-serif"
