@@ -47,7 +47,7 @@ const Navbar = () => {
                     </span>
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={user.user_metadata?.avatar_url} />
-                      <AvatarFallback>
+                      <AvatarFallback className="pt-[5px]">
                         {getUserInitials(
                           user.user_metadata?.full_name || user?.email
                         )}

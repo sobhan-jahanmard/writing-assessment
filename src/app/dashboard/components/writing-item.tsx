@@ -11,7 +11,7 @@ export const WritingItem = ({
     if (!dateString) return "-";
     const utcDate = new Date(dateString);
     const localDate = new Date(
-      utcDate.getTime() + new Date().getTimezoneOffset() * 60000
+      utcDate.getTime() - new Date().getTimezoneOffset() * 60000
     );
 
     return new Intl.DateTimeFormat("fa-IR", {
