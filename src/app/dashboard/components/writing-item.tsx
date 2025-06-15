@@ -1,4 +1,7 @@
-import { WritingWithLatestAssessment } from "@/src/lib/supabase/types";
+import {
+  AssessmentStatus,
+  WritingWithLatestAssessment,
+} from "@/src/lib/supabase/types";
 import { getWritingTypeLabels } from "@/src/lib/get-writing-type-labels";
 import Link from "next/link";
 import { cn } from "@/src/lib/utils";
@@ -27,8 +30,8 @@ export const WritingItem = ({
 
   const href = `/writing/${writingWithLatestAssessment?.writing_id}`;
 
-  const status: "completed" | "failed" | "pending" | undefined | null =
-    writingWithLatestAssessment?.latest_assessment?.status;
+  const status = writingWithLatestAssessment?.latest_assessment
+    ?.status as AssessmentStatus;
 
   return (
     <Link href={href} className="contents">

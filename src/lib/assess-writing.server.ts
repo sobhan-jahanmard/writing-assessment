@@ -6,7 +6,6 @@ import { saveWriting } from "./supabase/writings.service";
 import { saveAssessment } from "./supabase/assessments.service";
 import { ensureUserExists, getUserOnServer } from "./supabase/user.service";
 import { addToQueue } from "./queue";
-import { sleep } from "./sleep";
 
 export type Body = {
   question: string;
