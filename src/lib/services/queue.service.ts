@@ -126,8 +126,25 @@ export const addToQueue = async (data: JobData) => {
   return queue.add("assessments", data);
 };
 
-// Cleanup
-export const cleanup = async () => {
-  await worker.close();
-  await queue.close();
+// Process next available job
+export const processNextJob = async () => {
+  const jobCounts = await queue.getJobCounts();
+  if (jobCounts.waiting === 0) {
+    console.log("No jobs available in queue");
+    return null;
+  }
+
+  const jobs = await queue.getJobs(["waiting"], 0, 1);
+  if (jobs.length === 0) {
+    return null;
+  }
+
+  const job = jobs[0];
+  try {
+    await worker.run();
+    return job;
+  } catch (error) {
+    console.error("Failed to process job:", error);
+    throw error;
+  }
 };
