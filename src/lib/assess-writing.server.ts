@@ -5,7 +5,7 @@ import { uploadFile } from "./supabase/storage.service";
 import { saveWriting } from "./supabase/writings.service";
 import { saveAssessment } from "./supabase/assessments.service";
 import { ensureUserExists, getUserOnServer } from "./supabase/user.service";
-import { addToQueue } from "./queue";
+import { addToQueue } from "@/lib/services/queue.service";
 
 export type Body = {
   question: string;
@@ -47,11 +47,26 @@ export async function assessWriting(body: Body) {
       process.env.NEXT_PUBLIC_MODEL_NAME!
     );
 
-    await addToQueue({ body, savedWriting, initializedAsessment });
+    // Add to processing queue directly instead of making an HTTP request
+    const job = await addToQueue({
+      body,
+      savedWriting,
+      initializedAsessment,
+    });
 
-    return;
+    return {
+      success: true,
+      jobId: job.id,
+      writingId: savedWriting.writing_id,
+      assessmentId: initializedAsessment?.assessment_id,
+    };
   } catch (error: unknown) {
     console.error("Error processing request:", error);
-    throw new Error("Invalid request body");
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error(
+      "An unexpected error occurred while processing the request"
+    );
   }
 }
