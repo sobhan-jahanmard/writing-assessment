@@ -1,6 +1,7 @@
 import { WritingWithLatestAssessment } from "@/src/lib/supabase/types";
 import { getWritingTypeLabels } from "@/src/lib/get-writing-type-labels";
 import Link from "next/link";
+import { cn } from "@/src/lib/utils";
 
 export const WritingItem = ({
   writingWithLatestAssessment,
@@ -26,6 +27,9 @@ export const WritingItem = ({
 
   const href = `/writing/${writingWithLatestAssessment?.writing_id}`;
 
+  const status: "completed" | "failed" | "pending" | undefined | null =
+    writingWithLatestAssessment?.latest_assessment?.status;
+
   return (
     <Link href={href} className="contents">
       <tr className="border-b">
@@ -49,9 +53,25 @@ export const WritingItem = ({
         >
           {formatDate(writingWithLatestAssessment?.created_at)}
         </td>
-        <td className="px-6 py-4 font-bold">
-          {writingWithLatestAssessment?.latest_assessment?.status?.toUpperCase() ||
-            "-"}
+        <td
+          className={cn(
+            "px-6 py-4 font-bold",
+            status === "completed" && "text-green-600",
+            status === "failed" && "text-red-500",
+            status === "pending" && "text-orange-400"
+          )}
+        >
+          <span
+            className={cn(
+              "flex items-center justify-center text-center rounded-lg border px-2 pb-1 pt-2",
+              status === "completed" && "border-green-600",
+              status === "failed" && "border-red-500",
+              status === "pending" && "border-orange-400"
+            )}
+          >
+            {writingWithLatestAssessment?.latest_assessment?.status?.toUpperCase() ||
+              "-"}
+          </span>
         </td>
       </tr>
     </Link>
