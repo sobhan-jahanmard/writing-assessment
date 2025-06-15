@@ -1,9 +1,9 @@
 "use server";
 
-import { createClient } from "./server";
+import { createDirectClient } from "./server";
 
 export async function getAssessorFromModelName(modelName: string) {
-  const supabase = await createClient();
+  const supabase = createDirectClient();
   const { data, error } = await supabase
     .from("assessors")
     .select("*")

@@ -19,6 +19,7 @@ export function PaginatedWritings({ userId }: PaginatedWritingsProps) {
   const { data, isLoading } = useQuery({
     queryKey: ["getWritingsWithLatestAssessment", userId, page],
     queryFn: () => getWritingsWithLatestAssessment(userId, page, pageSize),
+    refetchOnWindowFocus: true,
   });
 
   if (isLoading) return <div>در حال بارگذاری...</div>;

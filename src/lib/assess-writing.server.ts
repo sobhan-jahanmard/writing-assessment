@@ -1,12 +1,12 @@
 "use server";
 
-import { getPrompt } from "./get-prompt";
-import { assessWritingGemini } from "./assess-writing-gemini";
 import { b64toBlob } from "./b64-to-blob";
 import { uploadFile } from "./supabase/storage.service";
 import { saveWriting } from "./supabase/writings.service";
 import { saveAssessment } from "./supabase/assessments.service";
 import { ensureUserExists, getUserOnServer } from "./supabase/user.service";
+import { addToQueue } from "./queue";
+import { sleep } from "./sleep";
 
 export type Body = {
   question: string;
@@ -48,33 +48,7 @@ export async function assessWriting(body: Body) {
       process.env.NEXT_PUBLIC_MODEL_NAME!
     );
 
-    const prompt = getPrompt({
-      question: body.question,
-      response: body.response,
-      type: body.type,
-      hasImage: !!body.image,
-    });
-
-    assessWritingGemini({
-      prompt,
-      image: body.image,
-      imageType: body.imageType,
-    })
-      .then(async (assessment) => {
-        await saveAssessment(
-          {
-            status: "completed",
-            writing_id: savedWriting?.writing_id,
-            text: assessment,
-            assessment_id: initializedAsessment?.assessment_id,
-          },
-          process.env.NEXT_PUBLIC_MODEL_NAME!
-        );
-      })
-      .catch((err) => {
-        console.log("err assessing");
-        console.log(err);
-      });
+    await addToQueue({ body, savedWriting, initializedAsessment });
 
     return;
   } catch (error: unknown) {

@@ -1,7 +1,7 @@
 "use server";
 
 import { Database } from "@/database.types";
-import { createClient } from "./server";
+import { createClient, createDirectClient } from "./server";
 import { SaveAssessmentDTO } from "./types";
 import { generateRandomAssessingTime } from "../generate-random-assessing-time";
 import { getAssessorFromModelName } from "./assessor.service";
@@ -24,7 +24,7 @@ export async function saveAssessment(
   assessmentDTO: SaveAssessmentDTO,
   modelName: string
 ) {
-  const supabase = await createClient();
+  const supabase = createDirectClient();
   const assessingTime = generateRandomAssessingTime();
 
   const assessor = await getAssessorFromModelName(modelName);
