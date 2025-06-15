@@ -1,7 +1,7 @@
 "use client";
 
 import { getAssessmentsOfWriting } from "@/src/lib/supabase/assessments.service";
-import { Writing } from "@/src/lib/supabase/types";
+import { AssessmentStatus, Writing } from "@/src/lib/supabase/types";
 import { useQuery } from "@tanstack/react-query";
 import { AssessmentView } from "./assessment-view";
 import { WritingWritingView } from "./writing-view";
@@ -17,7 +17,11 @@ export function WritingWritingViewWithAssessments({
     queryFn: () => getAssessmentsOfWriting(writing?.writing_id || ""),
     enabled: !!writing?.writing_id,
   });
-  if (isLoading || !assessments?.length || !writing) return <></>;
+  if (isLoading || !writing) return <></>;
+
+  const filteredAssessments = assessments?.filter(
+    (assessment) => (assessment.status as AssessmentStatus) === "completed"
+  );
 
   return (
     <span className="flex flex-col gap-4">
@@ -26,7 +30,7 @@ export function WritingWritingViewWithAssessments({
       <WritingWritingView writing={writing} />
       <h1 className="text-2xl font-extrabold mt-12">نتیجه ارزیابی</h1>
       <Divider className="my-4" />
-      {assessments?.map((assessment) => {
+      {filteredAssessments?.map((assessment) => {
         return (
           <AssessmentView
             key={assessment.assessment_id}
