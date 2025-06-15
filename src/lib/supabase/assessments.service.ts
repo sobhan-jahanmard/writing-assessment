@@ -20,6 +20,23 @@ export async function getAssessmentsOfWriting(writingId: string) {
   return data;
 }
 
+export async function getLatestPendingAssessment() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("assessments")
+    .select("*")
+    .eq("status", "pending")
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (!!error) {
+    throw new Error("Error fetching latest pending assessment");
+  }
+
+  return data;
+}
+
 export async function saveAssessment(
   assessmentDTO: SaveAssessmentDTO,
   modelName: string

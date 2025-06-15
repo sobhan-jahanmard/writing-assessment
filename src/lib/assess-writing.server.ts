@@ -5,7 +5,6 @@ import { uploadFile } from "./supabase/storage.service";
 import { saveWriting } from "./supabase/writings.service";
 import { saveAssessment } from "./supabase/assessments.service";
 import { ensureUserExists, getUserOnServer } from "./supabase/user.service";
-import { addToQueue } from "@/lib/services/queue.service";
 
 export type Body = {
   question: string;
@@ -47,16 +46,8 @@ export async function assessWriting(body: Body) {
       process.env.NEXT_PUBLIC_MODEL_NAME!
     );
 
-    // Add to processing queue directly instead of making an HTTP request
-    const job = await addToQueue({
-      body,
-      savedWriting,
-      initializedAsessment,
-    });
-
     return {
       success: true,
-      jobId: job.id,
       writingId: savedWriting.writing_id,
       assessmentId: initializedAsessment?.assessment_id,
     };
