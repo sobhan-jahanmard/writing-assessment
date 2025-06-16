@@ -1,6 +1,6 @@
 "use client";
 
-import { getSingleWriting } from "@/src/lib/supabase/writings.service";
+import { getSingleWritingSelfOrAdmin } from "@/src/lib/supabase/writings.service";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { WritingWritingViewWithAssessments } from "../components/writing-view-with-assessments";
@@ -11,7 +11,7 @@ export default function Page() {
 
   const { data: writing, isLoading } = useQuery({
     queryKey: ["writing", id],
-    queryFn: () => getSingleWriting(id),
+    queryFn: () => getSingleWritingSelfOrAdmin(id),
   });
 
   if (!id || isLoading) return <></>;

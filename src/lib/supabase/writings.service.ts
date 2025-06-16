@@ -45,6 +45,28 @@ export async function getSingleWriting(writingId: string) {
   return data;
 }
 
+export async function getSingleWritingSelfOrAdmin(writingId: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("writings")
+    .select("*")
+    .eq("writing_id", writingId)
+    .single();
+
+  if (data?.user_id !== (await supabase.auth.getUser()).data?.user?.id) {
+    throw new Error("Writing is not yours");
+  }
+
+  if (error) {
+    if (error.code === "PGRST116") {
+      throw new Error("Writing not found");
+    }
+    throw new Error("Error fetching writing");
+  }
+
+  return data;
+}
+
 export async function saveWriting(writingDTO: SaveWritingDTO) {
   const writing: Database["public"]["Tables"]["writings"]["Insert"] = {
     ...writingDTO,
