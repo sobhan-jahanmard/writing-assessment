@@ -20,8 +20,14 @@ export default function Home() {
             </h1>
             <p className="mt-3 max-w-md mx-auto text-base text-muted-foreground sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
               در کمتر از{" "}
-              <span className="text-bolder text-primary">۱۲ ساعت</span> - با
-              پایین ترین قیمت و بالاترین کیفیت
+              <span className="text-bolder text-primary">۱۲ ساعت</span>{" "}
+              &nbsp;و&nbsp;
+              <span className="relative inline-block">
+                پایین ترین قیمت
+                <span className="absolute top-1/2 left-0 w-full h-[1px] bg-muted-foreground -rotate-6"></span>
+              </span>
+              &nbsp;
+              <span className="text-emerald-500 font-bold">رایگان</span>
             </p>
             <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
               <div className="rounded-md shadow">
@@ -189,8 +195,14 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-foreground">
                   تسک ۱ آکادمیک
                 </h3>
-                <p className="mt-4 text-3xl font-bold text-primary">
-                  ۱۵۰,۰۰۰ تومان
+                <p className="mt-4 text-3xl font-bold text-primary relative">
+                  <span className="relative">
+                    ۱۵۰,۰۰۰ تومان
+                    <span className="absolute top-1/2 left-0 w-full h-[2px] bg-primary -rotate-6"></span>
+                  </span>
+                </p>
+                <p className="mt-2 text-2xl font-bold text-emerald-500">
+                  رایگان
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">
                   برای نمودارها و گراف‌ها
@@ -202,8 +214,14 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-foreground">
                   تسک 1 جنرال
                 </h3>
-                <p className="mt-4 text-3xl font-bold text-primary">
-                  ۱۵۰,۰۰۰ تومان
+                <p className="mt-4 text-3xl font-bold text-primary relative">
+                  <span className="relative">
+                    ۱۵۰,۰۰۰ تومان
+                    <span className="absolute top-1/2 left-0 w-full h-[2px] bg-primary -rotate-6"></span>
+                  </span>
+                </p>
+                <p className="mt-2 text-2xl font-bold text-emerald-500">
+                  رایگان
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">
                   برای نامه‌ها و مقالات
@@ -215,8 +233,14 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-foreground">
                   تسک ۲ آکادمیک
                 </h3>
-                <p className="mt-4 text-3xl font-bold text-primary">
-                  ۲۰۰,۰۰۰ تومان
+                <p className="mt-4 text-3xl font-bold text-primary relative">
+                  <span className="relative">
+                    ۲۰۰,۰۰۰ تومان
+                    <span className="absolute top-1/2 left-0 w-full h-[2px] bg-primary -rotate-6"></span>
+                  </span>
+                </p>
+                <p className="mt-2 text-2xl font-bold text-emerald-500">
+                  رایگان
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">
                   برای مقالات تحلیلی
