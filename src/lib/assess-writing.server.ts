@@ -5,6 +5,7 @@ import { uploadFile } from "./supabase/storage.service";
 import { saveWriting } from "./supabase/writings.service";
 import { saveAssessment } from "./supabase/assessments.service";
 import { ensureUserExists, getUserOnServer } from "./supabase/user.service";
+import { sleep } from "./sleep";
 
 export type Body = {
   question: string;
@@ -45,6 +46,8 @@ export async function assessWriting(body: Body) {
       },
       process.env.NEXT_PUBLIC_MODEL_NAME!
     );
+
+    await sleep(1000);
 
     return {
       success: true,
