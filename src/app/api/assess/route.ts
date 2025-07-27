@@ -1,14 +1,14 @@
 import { assessWritingGemini } from "@/src/lib/assess-writing-gemini";
 import { getPrompt } from "@/src/lib/get-prompt";
 import {
-  getLatestPendingAssessment,
+  getLatestPendingOrFailedAssessment,
   saveAssessment,
 } from "@/src/lib/supabase/assessments.service";
 import { getSingleWriting } from "@/src/lib/supabase/writings.service";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const initializedAsessment = await getLatestPendingAssessment();
+  const initializedAsessment = await getLatestPendingOrFailedAssessment();
 
   if (!initializedAsessment) {
     return NextResponse.json({ message: "No pending assessment" });

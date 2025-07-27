@@ -20,12 +20,12 @@ export async function getAssessmentsOfWriting(writingId: string) {
   return data;
 }
 
-export async function getLatestPendingAssessment() {
+export async function getLatestPendingOrFailedAssessment() {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("assessments")
     .select("*")
-    .eq("status", "pending")
+    .in("status", ["pending", "failed"])
     .order("created_at", { ascending: false })
     .limit(1)
     .single();
