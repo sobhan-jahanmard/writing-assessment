@@ -1,0 +1,15 @@
+name: Call Assess API Every Minute
+
+# Trigger every minute
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch: # optional: allow manual trigger
+
+jobs:
+  call-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Assess API
+        run: |
+          curl -X GET https://writing-assessment.vercel.app/api/assess
